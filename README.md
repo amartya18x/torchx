@@ -13,7 +13,9 @@ And some [paths](https://github.com/torch/paths) extensions :
 
 
 <a name='torch.concat'/>
-### [res] torch.concat([res], tensors, [dim]) ###
+
+### [res] torch.concat([res], tensors, [dim])
+
 Concatenates a table of Tensors along dimension `dim`.
  * `res` is a tensor holding the concatenation of Tensors `tensor`.
  * `tensors` is a table of tensors. Each tensor should have the same amount of dimensions and the same size for non-`dim` dimensions.
@@ -29,7 +31,9 @@ Example:
 ```
 
 <a name='torch.find'/>
-### [res] torch.find(tensor, val, [dim]) ###
+
+### [res] torch.find(tensor, val, [dim])
+
 Finds all indices of a given value `val` in Tensor `tensor`. 
 Returns a table of these indices by traversing the tensor one row 
 at a time. When `dim=2`, the only valid value for dim other than `nil` (the default),
@@ -57,7 +61,9 @@ value `val` in the row.
 ```
 
 <a name='torch.group'/>
-### [res, val, idx] torch.group([val, idx], tensor, [samegrp, desc]) ###
+
+### [res, val, idx] torch.group([val, idx], tensor, [samegrp, desc])
+
 Sorts and groups similar tensor variables together.
  * `res` is a table of `{idx=torch.LongTensor,val=torch.Tensor}`.
  * `val` is a Tensor of the same type as `tensor`. It will be used to store and return the sorted values.
@@ -91,7 +97,9 @@ Example:
 ```
 
 <a name='torch.remap'/>
-### [t1, t2] torch.remap(t1, t2, f(x,y) [p1, p2]) ###
+
+### [t1, t2] torch.remap(t1, t2, f(x,y) [p1, p2])
+
 Recursively applies function `f(x,y)` [to tables [of tables,...] of] Tensors
 `t1` and `t2`. When prototypes `p1` or `p2` are provided, they are used 
 to initialized any missing Tensors in `t1` or `t2`.
@@ -167,7 +175,8 @@ When in doubt, first tensor has priority:
 ```
 
 <a name='torch.md5'/>
-### torch.md5 ##
+
+### torch.md5
 
 Pure Lua module copy-pasted from [this repo](https://github.com/kikito/md5.lua) (for some reasons I can't get 
 git submodule to work with luarocks). The module includes two functions:
@@ -182,7 +191,9 @@ torch.md5.sumhexa('helloworld!')
 ```
 
 <a name="paths.indexdir"/>
-### [obj] paths.indexdir(path, [ext, use_cache, ignore]) ###
+
+### [obj] paths.indexdir(path, [ext, use_cache, ignore])
+
 ```lua
 files = paths.indexdir("/path/to/files/", 'png', true)
 images = {}
