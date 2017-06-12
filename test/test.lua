@@ -1,4 +1,4 @@
-local torchxtest = {}
+local torchxtest = torch.TestSuite()
 local precision_forward = 1e-6
 local precision_backward = 1e-6
 local nloop = 50
@@ -23,6 +23,7 @@ function torchxtest.treemax()
 end
 
 function torchxtest.find()
+   print("LKLKLK")
    local tensor = torch.Tensor{1,2,3,4,5,6,0.6,0,2}
    local indice = torch.LongTensor(torch.find(tensor, 2))
    mytester:assertTensorEq(indice, torch.LongTensor{2,9}, 0.00001, "find (1D) err")
@@ -116,7 +117,7 @@ function torchxtest.AliasMultinomial()
    am:draw()
    print("draw in "..a:time().real.." seconds")
 
-   local output = torch.LongTensor(1000, 1000)
+   local output = torch.LongTensor(10000, 10000)
    a:reset()
    am:batchdraw(output)
    print("batchdraw in "..a:time().real.." seconds")

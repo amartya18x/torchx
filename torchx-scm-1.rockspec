@@ -2,7 +2,7 @@ package = "torchx"
 version = "scm-1"
 
 source = {
-   url = "git://github.com/nicholas-leonard/torchx",
+   url = "git://github.com/amartya18x/torchx",
    tag = "master"
 }
 
@@ -11,7 +11,7 @@ description = {
    detailed = [[
    	    Experimental torch extensions
    ]],
-   homepage = "https://github.com/nicholas-leonard/torchx/blob/master/README.md"
+   homepage = "https://github.com/amartya18x/torchx/blob/master/README.md"
 }
 
 dependencies = {
