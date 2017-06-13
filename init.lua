@@ -1,11 +1,21 @@
 require 'torch'
 require 'paths'
 require 'sys'
+require 'nn'
 ffi = require 'ffi'
 
 torchx = {Tensor={}, version=1}
 
+function nn.require(packagename)
+   assert(torch.type(packagename) == 'string')
+   local success, message = pcall(function() require(packagename) end)
+   if not success then
+      print("missing package "..packagename..": run 'luarocks install nnx'")
+      error(message)
+   end
+end
 
+paths.require 'libtorchx'
 torch.include('torchx', 'extend.lua')
 torch.include('torchx', 'md5.lua')
 torch.include('torchx', 'treemax.lua')
@@ -19,6 +29,7 @@ torch.include('torchx', 'recursivetensor.lua')
 torch.include('torchx', 'Queue.lua')
 torch.include('torchx', 'AliasMultinomial.lua')
 torch.include('torchx', 'MultiCudaTensor.lua')
+torch.include('torchx', 'toast.lua')
 
 torch.include('torchx', 'test.lua')
 

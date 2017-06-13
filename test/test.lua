@@ -117,7 +117,7 @@ function torchxtest.AliasMultinomial()
    am:draw()
    print("draw in "..a:time().real.." seconds")
 
-   local output = torch.LongTensor(10000, 10000)
+   local output = torch.LongTensor(1000, 1000)
    a:reset()
    am:batchdraw(output)
    print("batchdraw in "..a:time().real.." seconds")
@@ -130,7 +130,38 @@ function torchxtest.AliasMultinomial()
    counts:div(counts:sum())
    
    mytester:assertTensorEq(probs, counts, 0.001)
+
+   if not pcall(function() require 'cutorch' end) then
+      return
+   else
+      print(" Runnign the cuda version")
+      local probs = torch.Tensor(10):uniform(0,1)
+      probs:div(probs:sum())
+      
+      local a = torch.Timer()
+      local am = torch.AliasMultinomial(probs)
+      print("[CUDA] : setup in "..a:time().real.." seconds")
+      
+      a:reset()
+      am:draw()
+      print("[CUDA] : draw in "..a:time().real.." seconds")
+      
+      local output = torch.LongTensor(1000, 1000)
+      a:reset()
+      am:batchdraw(output)
+      print("[CUDA] : batchdraw in "..a:time().real.." seconds")
+      
+      local counts = torch.Tensor(10):zero()
+      output:apply(function(x)
+            counts[x] = counts[x] + 1
+      end)
+      
+      counts:div(counts:sum())
+      
+      mytester:assertTensorEq(probs, counts, 0.001)
+   end
 end
+
 
 function torchxtest.MultiCudaTensor()
    if not pcall(function() require 'cutorch' end) then

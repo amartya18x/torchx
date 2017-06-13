@@ -1,3 +1,5 @@
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 CMAKE_POLICY(VERSION 2.6)
@@ -8,6 +10,24 @@ IF(LUAROCKS_PREFIX)
 ENDIF()
 FIND_PACKAGE(Torch REQUIRED)
 
+
+SET(BUILD_STATIC YES)
+SET(CMAKE_C_FLAGS
+  "--std=c99 -pedantic -Werror -Wall -Wextra -Wno-unused-function -D_GNU_SOURCE ${CMAKE_C_FLAGS}")
+
+
+SET(ext lib/TH/ext.c)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/lib/TH)
+
 FILE(GLOB luasrc *.lua)
 SET(luasrc ${luasrc} test/test.lua)
-ADD_TORCH_PACKAGE(torchx "" "${luasrc}" "Torch extensions")
+ADD_TORCH_PACKAGE(torchx "${ext}" "${luasrc}" "Torch extensions")
+
+TARGET_LINK_LIBRARIES(torchx luaT TH)
+
+
+IF (BUILD_STATIC OR "$ENV{STATIC_TH}" STREQUAL "YES")
+  SET_TARGET_PROPERTIES(torchx_static PROPERTIES COMPILE_FLAGS "-fPIC -DSTATIC_TH")
+ENDIF()
+INSTALL(FILES ${luasrc} DESTINATION "${Torch_INSTALL_LUA_PATH_SUBDIR}/torchx")

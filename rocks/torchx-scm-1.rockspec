@@ -3,7 +3,7 @@ version = "scm-1"
 
 source = {
    url = "git://github.com/amartya18x/torchx",
-   tag = "master"
+   tag = "AliasCuda"
 }
 
 description = {
@@ -17,7 +17,8 @@ description = {
 dependencies = {
    "torch >= 7.0",
    "paths >= 1",
-   "sys >= 1.1"
+   "sys >= 1.1",
+   "nn >= 1.0"
 }
 
 build = {
@@ -27,6 +28,8 @@ git submodule init
 git submodule update
 cmake -E make_directory build;
 cd build;
+echo "$(PREFIX)"
+echo "$(LUA_BINDIR)"
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(LUA_BINDIR)/.." -DCMAKE_INSTALL_PREFIX="$(PREFIX)"; 
 $(MAKE)
    ]],
